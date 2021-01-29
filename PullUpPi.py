@@ -37,7 +37,7 @@ last_capture_time = time.time()
 pull_ups = 0
 is_descending = True  # True if face has completed a pull up but hasn't yet lowered fully
 
-validTop, validBottom, validLeft, validRight = (40, 200, 80, 240)
+validTop, validBottom, validLeft, validRight = (40, 200, 120, 280)
 draw_square((validTop, validRight, validBottom, validLeft), (0, 0, 0, 20))
 
 while True:
