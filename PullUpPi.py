@@ -2,6 +2,10 @@ import face_recognition
 import picamera
 import numpy as np
 import time
+import pygame
+
+pygame.mixer.init()
+pygame.mixer.music.load('./audio/smb_coin.wav')
 
 camera = picamera.PiCamera()
 camera.resolution = (320, 240)
@@ -28,7 +32,7 @@ def draw_square(corners, color, layer=3):
 pullUpAreaTop = camera.resolution[1] * 2 // 5
 pullUpAreaBottom = camera.resolution[1] * 3 // 5
 
-draw_square((pullUpAreaTop, camera.resolution[0] - 1, pullUpAreaBottom, 0), (120, 120, 120, 255))
+draw_square((pullUpAreaTop, camera.resolution[0] - 1, pullUpAreaBottom, 0), (10, 10, 10, 50))
 
 overlay = None
 
@@ -37,8 +41,10 @@ last_capture_time = time.time()
 pull_ups = 0
 is_descending = True  # True if face has completed a pull up but hasn't yet lowered fully
 
-validTop, validBottom, validLeft, validRight = (40, 200, 120, 280)
-draw_square((validTop, validRight, validBottom, validLeft), (0, 0, 0, 20))
+validTop, validBottom, validLeft, validRight = (20, 220, 40, 280)
+draw_square((validTop, validRight, validBottom, validLeft), (0, 0, 0, 100))
+
+num_permanent_overlays = len(camera.overlays)
 
 while True:
     print("Capturing image. ({:.4}s since last capture)".format(time.time() - last_capture_time))
@@ -52,7 +58,7 @@ while True:
     face_locations = face_recognition.face_locations(output[validTop:validBottom, validLeft:validRight, :])
     print("Found {} faces in image.".format(len(face_locations)))
         
-    for o in camera.overlays[2:]:
+    for o in camera.overlays[num_permanent_overlays:]:
         camera.remove_overlay(o)
     
     for l in face_locations:
@@ -78,5 +84,6 @@ while True:
             if not is_descending:
                 pull_ups += 1
                 is_descending = True
+                pygame.mixer.music.play()
         
         draw_square(l, color)

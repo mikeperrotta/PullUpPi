@@ -9,7 +9,7 @@ class ScoreKeeper:
         self.resolution = resolution
         pygame.init()
         pygame.display.set_caption(caption)
-        self.window_surface = pygame.display.set_mode(resolution)
+        self.window_surface = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
         self.load_resources()
         self.draw_statics()
 
@@ -54,3 +54,7 @@ if __name__ == "__main__":
         time.sleep(1)
         daily += 1
         total += 1
+
+    pygame.display.quit()
+    pygame.quit()
+    quit()
