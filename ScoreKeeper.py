@@ -26,19 +26,19 @@ class ScoreKeeper:
         self.window_surface.blit(self.score_line, (self.resolution[0] // 4 - self.score_line.get_size()[0] // 2, 234))
         self.window_surface.blit(self.midline, (self.resolution[0] // 2, (self.resolution[1] - self.midline.get_size()[1]) // 2))
         daily_goal_text = "Today's goal"
-        daily_goal_text_surface = self.title_font.render(daily_goal_text, True, (112, 112, 112))
+        daily_goal_text_surface = self.title_font.render(daily_goal_text, True, (52, 52, 52))
         self.window_surface.blit(daily_goal_text_surface, (self.resolution[0] // 4 - daily_goal_text_surface.get_size()[0] // 2, 150))
         lifetime_score_text = "Lifetime score"
-        lifetime_score_text_surface = self.title_font.render(lifetime_score_text, True, (112, 112, 112))
+        lifetime_score_text_surface = self.title_font.render(lifetime_score_text, True, (52, 52, 52))
         self.window_surface.blit(lifetime_score_text_surface, (self.resolution[0] * 3 // 4 - lifetime_score_text_surface.get_size()[0] // 2, 150))
-        daily_goal_surface = self.number_font.render(str(self.goal), True, (112, 112, 112))
+        daily_goal_surface = self.number_font.render(str(self.goal), True, (52, 52, 52))
         self.window_surface.blit(daily_goal_surface, (self.resolution[0] // 4 - daily_goal_surface.get_size()[0] // 2 + 50, 240 + 30))
 
     def update_scores(self, daily_completed, lifetime_score):
         self.draw_statics()
-        daily_completed_surface = self.number_font.render(str(daily_completed), True, (112, 112, 112))
+        daily_completed_surface = self.number_font.render(str(daily_completed), True, (52, 52, 52))
         self.window_surface.blit(daily_completed_surface, (self.resolution[0] // 4 - daily_completed_surface.get_size()[0] // 2 - 50, 240 - 30))
-        lifetime_score_surface = self.number_font.render(str(lifetime_score), True, (112, 112, 112))
+        lifetime_score_surface = self.number_font.render(str(lifetime_score), True, (52, 52, 52))
         self.window_surface.blit(lifetime_score_surface, (self.resolution[0] * 3 // 4 - lifetime_score_surface.get_size()[0] // 2, 240))
         pygame.display.update()
 
