@@ -3,10 +3,9 @@ import picamera
 import numpy as np
 import time
 import pygame
+from SoundPlayer import *
 
-pygame.mixer.init()
-pygame.mixer.music.load('./audio/smb_coin.wav')
-
+sound_player = SoundPlayer()
 camera = picamera.PiCamera()
 camera.resolution = (320, 240)
 camera.hflip = True
@@ -84,6 +83,6 @@ while True:
             if not is_descending:
                 pull_ups += 1
                 is_descending = True
-                pygame.mixer.music.play()
+                sound_player.play(mario_coin)
         
         draw_square(l, color)

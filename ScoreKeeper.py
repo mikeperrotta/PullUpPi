@@ -2,7 +2,6 @@ import pygame
 import pygame_gui
 import time
 
-
 class ScoreKeeper:
     def __init__(self, goal=40, resolution=(800, 480), caption='Score Keeper'):
         self.goal = goal
@@ -41,6 +40,11 @@ class ScoreKeeper:
         lifetime_score_surface = self.number_font.render(str(lifetime_score), True, (52, 52, 52))
         self.window_surface.blit(lifetime_score_surface, (self.resolution[0] * 3 // 4 - lifetime_score_surface.get_size()[0] // 2, 240))
         pygame.display.update()
+    
+def safe_quit():    
+    pygame.display.quit()
+    pygame.quit()
+    quit()
 
 
 if __name__ == "__main__":
@@ -54,7 +58,8 @@ if __name__ == "__main__":
         time.sleep(1)
         daily += 1
         total += 1
-
-    pygame.display.quit()
-    pygame.quit()
-    quit()
+        if any([e.type == pygame.MOUSEBUTTONUP for e in list(pygame.event.get())]):
+            x, y = pygame.mouse.get_pos()
+            if y < 40:
+                safe_quit()
+    safe_quit()
