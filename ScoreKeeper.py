@@ -3,14 +3,13 @@ import pygame_gui
 import time
 
 class ScoreKeeper:
-    def __init__(self, goal=40, resolution=(800, 480), caption='Score Keeper'):
+    def __init__(self, goal=40, resolution=(800, 480), caption='Score Keeper', fullscreen=True):
         self.goal = goal
         self.resolution = resolution
         pygame.init()
         pygame.display.set_caption(caption)
-        self.window_surface = pygame.display.set_mode(resolution, pygame.FULLSCREEN)
+        self.window_surface = pygame.display.set_mode(resolution, pygame.FULLSCREEN if fullscreen else pygame.RESIZABLE)
         self.load_resources()
-        self.draw_statics()
 
     def load_resources(self):
         self.midline = pygame.image.load('./assets/midline.bmp')
@@ -39,6 +38,11 @@ class ScoreKeeper:
         self.window_surface.blit(daily_completed_surface, (self.resolution[0] // 4 - daily_completed_surface.get_size()[0] // 2 - 50, 240 - 30))
         lifetime_score_surface = self.number_font.render(str(lifetime_score), True, (52, 52, 52))
         self.window_surface.blit(lifetime_score_surface, (self.resolution[0] * 3 // 4 - lifetime_score_surface.get_size()[0] // 2, 240))
+        pygame.display.update()
+        
+    def show_cv_image(self, image):
+        image = pygame.image.frombuffer(image.tostring(), image.shape[1::-1], "BGR")
+        self.window_surface.blit(image, (0, 0))
         pygame.display.update()
     
 def safe_quit():    
