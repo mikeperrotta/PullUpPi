@@ -12,12 +12,12 @@ camera.framerate = 32
 camera.hflip = True
 rawCapture = PiRGBArray(camera, size=camera.resolution)
 
-backSub = cv.createBackgroundSubtractorMOG2(history=500, varThreshold=32, detectShadows=False)
+backSub = cv.createBackgroundSubtractorMOG2(history=300, varThreshold=32, detectShadows=False)
 
 time.sleep(0.1)
 
-push_up_low = 270
-push_up_high = 90
+push_up_low = 280
+push_up_high = 240
 has_lowered = False
 
 """ Displays
@@ -25,15 +25,15 @@ has_lowered = False
 1 - Processed video
 2 - Score keeper
 """
-display = 2
+display = 1
 num_displays = 3
 
 smoothed_height = 0
-smoothing_value = .5
+smoothing_value = .75
 
 daily_goal = 30
-daily_total = 0
-lifetime_total = 0
+daily_total = 26
+lifetime_total = 88
 
 sk = ScoreKeeper(goal=daily_goal, fullscreen=True)
 sp = SoundPlayer()
@@ -55,7 +55,10 @@ def next_display():
     display = display % num_displays
     if display == 2:
         sk.update_scores(daily_total, lifetime_total)
-
+        
+if display == 2:
+        sk.update_scores(daily_total, lifetime_total)
+        
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     image = frame.array
     
@@ -80,11 +83,11 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
         cv.line(masked_image, (0, push_up_high), (camera.resolution[0], push_up_high), (245, 66, 230), 1)
         sk.show_cv_image(masked_image)
         
-    if any([e.type == pygame.MOUSEBUTTONUP for e in list(pygame.event.get())]):
+    if any([e.type == pygame.MOUSEMOTION for e in list(pygame.event.get())]):
         x, y = pygame.mouse.get_pos()
         if y < 40 and x > 760:
             break
-        else:
+        elif x > 760:
             next_display()
 
     if not has_lowered:
