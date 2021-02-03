@@ -45,7 +45,7 @@ def on_successful_push_up():
     if display == 2:
         sk.update_scores(daily_total, lifetime_total)
     sp.play(mario_coin)
-    if daily_total == lifetime_total:
+    if daily_total == daily_goal:
         sp.play(mario_level_complete)
     print('push up!')
     
